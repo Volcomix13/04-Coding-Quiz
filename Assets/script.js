@@ -1,16 +1,15 @@
+//Variables
 var quizArea = document.getElementById("quiz");
 var startBtn = document.getElementById("startBtn");
 var scoreForm = document.getElementById("score")
 var timerEl = document.querySelector(".time");
 
-// console.log(startBtn)
-// console.dir(startBtn)
 
 var timeLeft = 60;
 var score;
 
 
-
+//object with quiz questions
 var questions = [
   {
     question: "What does HTML stand for?",
@@ -37,19 +36,13 @@ var questions = [
 
 var currentQuestion = 0;
 
+//functions to run the quiz
+
 function startGame(event) {
   event.preventDefault();
-//   console.log(event);
-  // start the quiz!
-  // 1. Start timer-DONE!
-  // 2. create a question-DONE!
-  // 3. create answer choices-DONE!
   // 4. add event listeners to my answer choice buttons and that will validate whether they chose the right answer or not
   // 5. move on to next question
-
-  // this function will start your timer
     startTimer()
-  // this function will kick off rendering the question and answers to the page
     generateQuestion();
 }
 
@@ -57,33 +50,30 @@ function generateQuestion() {
   var question = questions[currentQuestion].question;
   // create an element (p, div?)
   var parragraph = document.createElement("p");
-  // write into that element using our question variable (textContent)
+
   parragraph.textContent = question;
   
-  // append that question element into our quiz area (appendChild)
   document.body.appendChild(parragraph);
 
-  // generateAnswerChoices
   generateAnswerChoices();
 }
 
 function generateAnswerChoices() {
-// for loop i < questions[currentQuestion].answerChoices.length
-// create an element (button)
-// write into that element using our answerChoices variable (textContent)
   var answerChoices = questions[currentQuestion].answerChoices;
   for ( let i = 0; i <questions[currentQuestion].answerChoices.length; i++){
     var choicesButton = document.createElement("button");
     choicesButton.innerHTML = answerChoices [i];
     document.body.appendChild(choicesButton);
   }
-// add event listener btn.addEventListener("click", validateAnswer)
- choicesButton.addEventListener("click", validateAnswer);
+    
+  choicesButton.addEventListener("click", validateAnswer);
 }
 
+ 
 function validateAnswer(event) {
   event.preventDefault();
   // grab text of button that was clicked (event.target.textContent)
+  
 
   // conditional statement test userChoice === correctAnswer
   // true
@@ -107,18 +97,13 @@ function validateAnswer(event) {
 function startTimer() {
   timer = setInterval(function() {
     if (timeLeft > 1) {
-      // Set the `textContent` of `timerEl` to show the remaining seconds
       timerEl.textContent = timeLeft + ' seconds remaining';
-      // Decrement `timeLeft` by 1
       timeLeft--;
     } else if (timeLeft === 1) {
-      // When `timeLeft` is equal to 1, rename to 'second' instead of 'seconds'
       timerEl.textContent = timeLeft + ' second remaining';
       timeLeft--;
     } else {
-      // Once `timeLeft` gets to 0, set `timerEl` to an empty string
       timerEl.textContent = '';
-      // Use `clearInterval()` to stop the timer
       clearInterval(timerInterval);
       endGame()
       // Call the `displayMessage()` function
