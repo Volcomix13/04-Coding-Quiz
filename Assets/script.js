@@ -69,11 +69,13 @@ function generateAnswerChoices() {
   choicesButton.addEventListener("click", validateAnswer);
 }
 
- 
+
 function validateAnswer(event) {
   event.preventDefault();
   // grab text of button that was clicked (event.target.textContent)
-  
+  choicesButton.addEventListener("click", validateAnswer);
+  var userChoice = '';
+
 
   // conditional statement test userChoice === correctAnswer
   // true
@@ -81,7 +83,11 @@ function validateAnswer(event) {
   // false
   //    incorrect answer
   //    decrease timer by 10 secs
-  
+  if(userChoice === correctAnswer){
+    console.log(correctAnswer + "is correct!");
+  }else{
+    console.log("Incorrect" + timeLeft - 10);
+  }
   // move onto the next question
 
   // currentQuestion++
