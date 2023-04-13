@@ -8,7 +8,6 @@ var timerEl = document.querySelector(".time");
 var timeLeft = 60;
 var score;
 
-
 //object with quiz questions
 var questions = [
   {
@@ -36,6 +35,8 @@ var questions = [
 
 var currentQuestion = 0;
 
+document.getElementById("endGame").style.display= "none";
+
 //functions to run the quiz
 
 function startGame(event) {
@@ -45,6 +46,7 @@ function startGame(event) {
     startTimer()
     generateQuestion();
 }
+
 
 function generateQuestion() {
   var question = questions[currentQuestion].question;
@@ -56,8 +58,12 @@ function generateQuestion() {
   document.body.appendChild(parragraph);
 
   generateAnswerChoices();
+
+  //Hides Start button 
+  document.getElementById("startBtn").style.display= "none";
 }
 
+var choicesButton = document.createElement("button");
 function generateAnswerChoices() {
   var answerChoices = questions[currentQuestion].answerChoices;
   for ( let i = 0; i <questions[currentQuestion].answerChoices.length; i++){
@@ -69,30 +75,20 @@ function generateAnswerChoices() {
   choicesButton.addEventListener("click", validateAnswer);
 }
 
-
 function validateAnswer(event) {
   event.preventDefault();
-  // grab text of button that was clicked (event.target.textContent)
-  choicesButton.addEventListener("click", validateAnswer);
-  var userChoice = '';
-
-
-  // conditional statement test userChoice === correctAnswer
-  // true
-  //    correct answer code
-  // false
-  //    incorrect answer
-  //    decrease timer by 10 secs
-  if(userChoice === correctAnswer){
-    console.log(correctAnswer + "is correct!");
+  var userChoice = event.target;
+  if(userChoice.matches(questions[currentQuestion].correctAnswer)){
+    console.log(userChoice + "is correct!");
   }else{
-    console.log("Incorrect" + timeLeft - 10);
+    console.log("Incorrect " + (timeLeft - 10));
   }
-  // move onto the next question
+}
 
-  // currentQuestion++
-  // conditional statement to check if you've reached the end of the questions array if(currentQuestion === questions.length)
-  // end the game (call endGame())
+
+  //currentQuestion++
+  // conditional statement to check if you've reached the end of the questions array 
+  if(currentQuestion === questions.length){
     endGame()
   // reset quiz area (quizArea.innerHTML = "", loop using .removeChild())
 
@@ -110,24 +106,19 @@ function startTimer() {
       timeLeft--;
     } else {
       timerEl.textContent = '';
-      clearInterval(timerInterval);
+      clearInterval();
       endGame()
-      // Call the `displayMessage()` function
-      // displayMessage();
     }
   }, 1000)
 }
 
 function endGame() {
-  // end game whether it reaches the end of the quiz or time runs out
-  // display none quiz area and display end game div
-
-
-  // score
+  if(timeLeft === 0){
+  document.getElementById("quiz").style.display = "none";
+  }else{
+  document.getElementById("endGame").style.display="score";
   score = timeLeft;
-  // display score
-
-  // display high score
+  }
 }
 
 function saveScore(event) {
@@ -151,3 +142,5 @@ function getScore() {
 startBtn.addEventListener("click", startGame);
 
 scoreForm.addEventListener("submit", saveScore)
+
+
