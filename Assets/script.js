@@ -125,22 +125,28 @@ function endGame() {
 
 
 
+
+
 function saveScore(event) {
   event.preventDefault();
 
   var scoreObj = {
     intials: event.target.children[0].value,
     score: timeLeft
-  }
+
+  };  
+  console.log(scoreObj);
   // sets the score into local storage
   localStorage.setItem("score", JSON.stringify(scoreObj));
+  getScore();
 }
+
 
 function getScore() {
   // get high score out of localstorage
-  var score = JSON.parse(localStorage.getItem("score"))
+  var score = JSON.parse(localStorage.getItem("score"));
   // display to end game div
-  document.getElementById("endGame").style.display="endGame";
+  document.getElementById("endGame").style.display= "block";
   
   
 }
