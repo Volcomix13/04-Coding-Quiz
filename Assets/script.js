@@ -119,7 +119,10 @@ function endGame() {
   document.getElementById("quiz").style.display="none";
 
   document.getElementById("endGame").style.display= "block";
+
+  getScore();
 }
+
 
 
 function saveScore(event) {
